@@ -27,4 +27,16 @@ class Handler extends ExceptionHandler
             //
         });
     }
+    public function render($request, Throwable $exception)
+{
+    if ($exception instanceof Error) {
+        // Log the error
+        \Log::error('Error: ' . $exception->getMessage());
+
+        
+        return response()->view('errors.error', [], 500);
+    }
+
+    return parent::render($request, $exception);
+}
 }
